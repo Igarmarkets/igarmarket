@@ -11,8 +11,19 @@ import {
 export const storage = getStorage(app)
 export default storage
 
-// Firma esperada por el resto del código: (path, file)
+// (path, file) -> url pública
 export async function uploadPublicImage(
+  path: string,
+  data: Blob | Uint8Array | ArrayBuffer,
+  metadata?: UploadMetadata
+): Promise<string> {
+  const r = ref(storage, path)
+  await uploadBytes(r, data, metadata)
+  return await getDownloadURL(r)
+}
+
+// (path, file) -> url (el acceso lo controlan las reglas de Storage)
+export async function uploadPrivateImage(
   path: string,
   data: Blob | Uint8Array | ArrayBuffer,
   metadata?: UploadMetadata
