@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import clsx from 'clsx'
 import { Group } from 'common/group'
 import { buildArray } from 'common/util/array'
@@ -13,18 +14,35 @@ import {
 import { Search } from 'web/components/search'
 import { useIsMobile } from 'web/hooks/use-is-mobile'
 import { usePrivateUser, useUser } from 'web/hooks/use-user'
-import { ManifoldLogo } from 'web/components/nav/manifold-logo'
+// import { ManifoldLogo } from 'web/components/nav/manifold-logo' // ← eliminado
 import { DEFAULT_FOR_YOU, Welcome } from 'web/components/onboarding/welcome'
 import { useSaveReferral } from 'web/hooks/use-save-referral'
+
 export default function BrowsePage() {
   const user = useUser()
   useSaveReferral(user)
 
   return (
     <Page trackPageView={'questions page'} className="lg:px-4">
-      {/* only show logo on mobile, since there's no sidebar */}
-      {!user && <ManifoldLogo className="m-2 flex lg:hidden" />}
-      <div className="lg:mb-4"></div>
+      <Head>
+        <title>Igarmarkets — Explora mercados de predicción</title>
+        <meta
+          name="description"
+          content="Igarmarkets: plataforma de mercados de predicción"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+      </Head>
+
+      {/* Banner temporal Igarmarkets */}
+      <div className="mx-auto max-w-5xl px-4 py-6">
+        <h1 className="text-2xl font-semibold">Igarmarkets</h1>
+        <p className="text-gray-500">Explora los mercados de predicción disponibles</p>
+      </div>
+
+      {/* separador simple */}
+      <div className="lg:mb-4" />
+
+      {/* <ManifoldLogo className="m-2 flex lg:hidden" /> ← eliminado */}
       <Welcome />
       <BrowsePageContent />
     </Page>
