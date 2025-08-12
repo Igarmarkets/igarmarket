@@ -18,6 +18,8 @@ export default function Document() {
       <Head>
         <link rel="icon" href={ENV_CONFIG.faviconPath} />
         <Script src="/init-theme.js" strategy="beforeInteractive" />
+        <link rel="manifest" href="/site.webmanifest" />
+
       </Head>
       <body className="bg-canvas-0 text-ink-1000">
         <Main />
