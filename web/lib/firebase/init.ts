@@ -10,5 +10,8 @@ export const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 }
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig)
-export default app
+// Creamos una instancia única y la exportamos como default y como named
+const appInstance = getApps().length ? getApp() : initializeApp(firebaseConfig)
+
+export default appInstance
+export const app = appInstance
