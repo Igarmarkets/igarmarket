@@ -1,0 +1,12 @@
+{
+  "name": "Igarmarkets",
+  "short_name": "Igarmarkets",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48 64x64 96x96", "type": "image/x-icon" },
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
