@@ -11,14 +11,13 @@ import {
 export const storage = getStorage(app)
 export default storage
 
-// Subida sencilla y devuelve URL pública de descarga
+// Firma esperada por el resto del código: (path, file)
 export async function uploadPublicImage(
-  data: Blob | Uint8Array | ArrayBuffer,
   path: string,
+  data: Blob | Uint8Array | ArrayBuffer,
   metadata?: UploadMetadata
 ): Promise<string> {
   const r = ref(storage, path)
   await uploadBytes(r, data, metadata)
-  const url = await getDownloadURL(r)
-  return url
+  return await getDownloadURL(r)
 }
