@@ -1,45 +1,24 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { privateStorage, storage } from './init'
+// web/lib/firebase/storage.ts
+import app from './init'
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  type UploadMetadata,
+} from 'firebase/storage'
 
-export const uploadPrivateImage = async (
-  userId: string,
-  uri: string,
-  fileName: string
-): Promise<string> => {
-  try {
-    const storageRef = ref(
-      privateStorage,
-      `private-images/${userId}/${fileName}`
-    )
+export const storage = getStorage(app)
+export default storage
 
-    // Fetch the image and get it as a blob
-    const response = await fetch(uri)
-    const blob = await response.blob()
-
-    await uploadBytes(storageRef, blob)
-    return getDownloadURL(storageRef)
-  } catch (error) {
-    console.error('Error uploading image:', error)
-    throw error
-  }
-}
-
-export const uploadPublicImage = async (
-  username: string,
-  uri: string,
-  fileName: string
-): Promise<string> => {
-  try {
-    const storageRef = ref(storage, `public-images/${username}/${fileName}`)
-
-    // Fetch the image and get it as a blob
-    const response = await fetch(uri)
-    const blob = await response.blob()
-
-    await uploadBytes(storageRef, blob)
-    return getDownloadURL(storageRef)
-  } catch (error) {
-    console.error('Error uploading image:', error)
-    throw error
-  }
+// Subida sencilla y devuelve URL pública de descarga
+export async function uploadPublicImage(
+  data: Blob | Uint8Array | ArrayBuffer,
+  path: string,
+  metadata?: UploadMetadata
+): Promise<string> {
+  const r = ref(storage, path)
+  await uploadBytes(r, data, metadata)
+  const url = await getDownloadURL(r)
+  return url
 }
